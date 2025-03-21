@@ -15,6 +15,8 @@ RUN chmod 600 /etc/nginx/certs/nginx.*
 
 RUN rm /var/www/html/index.nginx-debian.html
 
-EXPOSE 4431
+EXPOSE 443
+
+RUN echo "Hello from NGINX with TLS!" > /var/www/html/index.html
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -1,8 +1,8 @@
 all: up
 
 up:
-	mkdir -p /home/mgovinda/data/
-	mkdir -p /home/mgovinda/data/wordpress
+	mkdir -p /home/phuture/mgovinda/data/
+	mkdir -p /home/phuture/mgovinda/data/wordpress
 	docker-compose -f ./srcs/docker-compose.yml up --build -d
 
 down:

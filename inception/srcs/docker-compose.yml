@@ -1,6 +1,6 @@
 services:
   nginx:
-    build: requierments/nginx/
+    build: requirements/nginx/
     container_name: nginx
     ports:
       - "443:443"
@@ -9,6 +9,8 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - super_bridge
+  wordpress:
+    build : requirements/wordpress/
 
 volumes:
   wordpress_data:

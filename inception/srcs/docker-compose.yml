@@ -11,6 +11,12 @@ services:
       - super_bridge
   wordpress:
     build : requirements/wordpress/
+    container_name: wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - super_bridge
+    restart: always
 
 volumes:
   wordpress_data:

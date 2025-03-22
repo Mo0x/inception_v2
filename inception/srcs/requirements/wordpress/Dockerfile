@@ -13,10 +13,13 @@ RUN wget https://wordpress.org/latest.tar.gz && \
 # Configure PHP-FPM to run in foreground
 RUN sed -i 's/^listen = .*/listen = 9000/' /etc/php/7.3/fpm/pool.d/www.conf && \
     echo "cgi.fix_pathinfo=0" >> /etc/php/7.3/fpm/php.ini
+    
+RUN mkdir -p /run/php
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 9000
+
 
 CMD ["php-fpm7.3", "-F"]

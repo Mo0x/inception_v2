@@ -1,34 +1,65 @@
 services:
   nginx:
     build:
-      context: ./requirements/nginx/
-      network: host
+      context: requirements/nginx
+      args:
+        DOMAIN_NAME: ${DOMAIN_NAME}
     container_name: nginx
     ports:
-      - "443:443"
-    restart: always
+      - "${SSL_PORT}:${SSL_PORT}"
     volumes:
       - wordpress_data:/var/www/html
+    depends_on:
+      - wordpress
     networks:
       - super_bridge
+    restart: always
 
   wordpress:
     build:
-      context: ./requirements/wordpress/
-      network: host
+      context: requirements/wordpress
     container_name: wordpress
-    restart: always
     volumes:
       - wordpress_data:/var/www/html
+    depends_on:
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
+      WORDPRESS_DB_USER: ${WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_DB_PASSWORD}
     networks:
       - super_bridge
+    restart: always
+
+  mariadb:
+    build:
+      context: requirements/mariadb
+    container_name: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - super_bridge
+    restart: always
 
 volumes:
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: /home/phuture/mgovinda/data/wordpress
+      device: ${VOLUME_PATH}/wordpress
+      o: bind
+
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${VOLUME_PATH}/mariadb
       o: bind
 
 networks:

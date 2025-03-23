@@ -1,6 +1,8 @@
 services:
   nginx:
-    build: requirements/nginx/
+    build:
+      context: ./requirements/nginx/
+      network: host
     container_name: nginx
     ports:
       - "443:443"
@@ -9,14 +11,17 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - super_bridge
+
   wordpress:
-    build : requirements/wordpress/
+    build:
+      context: ./requirements/wordpress/
+      network: host
     container_name: wordpress
+    restart: always
     volumes:
       - wordpress_data:/var/www/html
     networks:
       - super_bridge
-    restart: always
 
 volumes:
   wordpress_data:
@@ -25,6 +30,7 @@ volumes:
       type: none
       device: /home/phuture/mgovinda/data/wordpress
       o: bind
+
 networks:
   super_bridge:
     driver: bridge

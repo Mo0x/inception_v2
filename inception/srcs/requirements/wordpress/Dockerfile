@@ -1,4 +1,6 @@
 FROM debian:buster
+ARG APT_FORCE_DNS_FIX
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Install dependencies
 RUN apt update && apt install -y \
@@ -9,6 +11,9 @@ WORKDIR /var/www/html
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzf latest.tar.gz --strip-components=1 && \
     rm latest.tar.gz
+
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
 
 # Configure PHP-FPM to run in foreground
 RUN sed -i 's/^listen = .*/listen = 9000/' /etc/php/7.3/fpm/pool.d/www.conf && \

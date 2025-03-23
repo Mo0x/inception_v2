@@ -1,4 +1,5 @@
 FROM debian:buster
+ARG APT_FORCE_DNS_FIX
 
 RUN apt update && apt install -y nginx openssl
 

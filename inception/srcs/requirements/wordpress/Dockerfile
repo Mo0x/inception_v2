@@ -1,6 +1,5 @@
 FROM debian:buster
 ARG APT_FORCE_DNS_FIX
-RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # Install dependencies
 RUN apt update && apt install -y \

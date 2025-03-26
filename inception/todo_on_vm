@@ -1,0 +1,6 @@
+TODO
+
+sudo nano /etc/hosts
+
+add this line:
+127.0.0.1 mgovinda.42.fr

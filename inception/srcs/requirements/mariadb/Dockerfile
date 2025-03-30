@@ -13,3 +13,6 @@ RUN service mysql start && \
 EXPOSE 3306
 
 CMD ["mysqld"]
+
+COPY ./conf/init.sql /docker-entrypoint-initdb.d/init.sql
+
